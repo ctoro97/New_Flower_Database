@@ -4,12 +4,15 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+
 public class FlowerClub{
+//Main method
 	public static void main (String[] args){
 		startScreen();
 		mainMenu();
 	}
 
+//Simple Command Line Startup Screen
 	public static void startScreen(){
 		String disp = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
 		disp += "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
@@ -26,11 +29,14 @@ public class FlowerClub{
 	}
 
 	public static void mainMenu(){
+		//Connect to database
 		SqliteDB db = new SqliteDB();
+		//Create Scanner
 		Scanner input = new Scanner(System.in);
 		int uIn;
 		int fIn;
 		int tin;
+		//LOOP FOR MENU
 		while (true){
 			System.out.println("  PLEASE SELECT AN OPTION:\n\n\t1) FLOWER SIGHTINGS\n\t2) UPDATE FLOWER INFORMATION\n\t3) NEW FLOWER SIGHTING\n\t4) TERMINATE PROGRAM\n"); 
 			uIn = userIn();
@@ -48,27 +54,30 @@ public class FlowerClub{
 				int flor = userIn();
 				ArrayList list = db.getFlowers();
 				if(flor > 0 && flor < list.size()){
-
 					String flo = list.get(flor - 1).toString();
 					//USER CHOOSES A LOCATION FROM FEATURES TABLES
 					System.out.println("\n  SELECT LOCATION SIGHTED:\n");
 					db.listLocations();
 					int loc = userIn();
 					ArrayList arr = db.getLocations();
-					String place = arr.get(loc - 1).toString();
-					//USER SUBMITS DATE FLOWER WAS SEEN
-					System.out.println("\n  YEAR SIGHTED: \n");
-					int y = userIn();
-					System.out.println("\n  MONTH SIGHTED: \n");
-					int m = userIn();
-					System.out.println("\n  DAY SIGHTED: \n");
-					int d = userIn();
-					String date = y + "-" + m + "-" + d;
-					//USER SUBMITS NAME
-					System.out.println("\n  WHAT IS YOUR NAME:\n");
-					String name = input.nextLine();
-					name = input.nextLine();
-					db.insertSighting(name, place, date, flo);
+					if(loc > 0 && loc < arr.size()){
+						String place = arr.get(loc - 1).toString();
+						//USER SUBMITS DATE FLOWER WAS SEEN
+						System.out.println("\n  YEAR SIGHTED: \n");
+						int y = userIn();
+						System.out.println("\n  MONTH SIGHTED: \n");
+						int m = userIn();
+						System.out.println("\n  DAY SIGHTED: \n");
+						int d = userIn();
+						String date = y + "-" + m + "-" + d;
+						//USER SUBMITS NAME
+						System.out.println("\n  WHAT IS YOUR NAME:\n");
+						String name = input.nextLine();
+						name = input.nextLine();
+						db.insertSighting(name, place, date, flo);
+					}else{
+						System.out.println("\n OPTION DOES NOT EXIST!!  \n");
+					}
 				}
 				else{
 					System.out.println("\n  OPTION DOES NOT EXIST!! \n");
@@ -80,20 +89,56 @@ public class FlowerClub{
 				System.out.println("\n  SELECT TABLE TO UPDATE: \n\n\t1) SIGHTINGS\n\t2) FEATURES\n\t3) FLOWERS\n");
 				tin = userIn();
 				if(tin == 1){
-
+					System.out.println("\n  SELECT FLOWER TO UPDATE: \n");
+					db.listFlowers();
+					int upSightO = userIn();
+					ArrayList flows = db.getFlowers();
+					if(upSightO > 0 && upSightO < flows.size()){
+						String dsighto = flows.get(upSightO - 1).toString();
+						System.out.println("\n  SELECT LOCATION TO UPDATE: \n");
+						db.listLocations();
+						int upSightT = userIn();
+						ArrayList nloc = db.getLocations();
+						if(upSightT > 0 && upSightT < nloc.size()){
+							String dsightt = nloc.get(upSightT - 1).toString();
+							System.out.println("\n  SIGHTED BY: \n");
+							String sname = input.nextLine();
+							sname = input.nextLine();
+							System.out.println("\n  YEAR SIGHTED: \n");
+							int ye = userIn();
+							System.out.println("\n  MONTH SIGHTED: \n");
+							int mo = userIn();
+							System.out.println("\n  DAY SIGHTED: \n");
+							int da = userIn();
+							String date = ye + "-" + mo + "-" + da;
+							db.upSightings(dsighto, dsightt, sname, date);
+						}else{
+							System.out.println("\n  OPTION DOES NOT EXIST!! \n");
+						}
+					}else{
+						System.out.println("\n  OPTION DOES NOT EXIST!! \n");
+					}
 				}else if(tin == 2){
-					System.out.println("\n  SELECT FEATURE TO UPDATE: \n");
+					System.out.println("\n  SELECT LOCATION TO UPDATE: \n");
 					db.listLocations();
 					int upfeat = userIn();
 					ArrayList lugar = db.getLocations();
-					String dfeat = lugar.get(upfeat - 1).toString();
-					System.out.println("\n  LOCATION NAME: \n");
-					System.out.println("\n  CLASS NAME: \n");
-					System.out.println("\n  LATITUDE: \n");
-					System.out.println("\n  LONGITUDE: \n");
-					System.out.println("\n  MAP NAME: \n");
-					System.out.println("\n  ELEVATION: \n");
-					//db.upFeatures();
+					if(upfeat > 0 && upfeat < lugar.size()){
+						String dfeat = lugar.get(upfeat - 1).toString();
+						System.out.println("\n  CLASS NAME: \n");
+						String cname = input.next();
+						System.out.println("\n  LATITUDE: \n");
+						String lname = input.next();
+						System.out.println("\n  LONGITUDE: \n");
+						String loname = input.next();
+						System.out.println("\n  MAP NAME: \n");
+						String mname = input.next();
+						System.out.println("\n  ELEVATION: \n");
+						String elname = input.next();
+						db.upFeatures(dfeat, cname, lname, loname, mname, elname);
+					}else{
+						System.out.println("\n  OPTION DOES NOT EXIST!! \n");
+					}
 
 				}else if(tin == 3){
 					System.out.println("\n  SELECT FLOWER TO UPDATE: \n");

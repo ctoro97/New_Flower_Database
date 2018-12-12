@@ -12,6 +12,7 @@ public class SqliteDB{
 	Statement stmt = null;
 	String url = "jdbc:sqlite:C:/Users/toroc/Database_Flower/flowers.db";
 
+	//Method connects to the database
 	SqliteDB(){
 		try{
 			c = DriverManager.getConnection(url);
@@ -21,6 +22,7 @@ public class SqliteDB{
 		}
 	}
 
+	//Methods lists all the flowers by common name
 	public void listFlowers(){
 		try{
 			this.stmt = c.createStatement();
@@ -43,6 +45,7 @@ public class SqliteDB{
 		}
 	}
 
+	//Method returns arraylist for flowers
 	public ArrayList getFlowers(){
 		ArrayList al = new ArrayList();
 		try{
@@ -57,6 +60,7 @@ public class SqliteDB{
 		return al;
 	}
 
+	//Method lists all the locations by location
 	public void listLocations(){
 		try{
 			this.stmt = c.createStatement();
@@ -73,6 +77,7 @@ public class SqliteDB{
 		}
 	}
 
+	//Method returns arraylist of locations
 	public ArrayList getLocations(){
 		ArrayList al = new ArrayList();
 		try{
@@ -87,6 +92,7 @@ public class SqliteDB{
 		return al;
 	}
 
+	//Method displays the 10 most recent sightings of flower selected
 	public void dispSightings(String x){
 		try{
 			this.stmt = c.createStatement();
@@ -104,6 +110,7 @@ public class SqliteDB{
 		}
 	}
 
+	//Method updates tuple in flower table
 	public void upFlower(String x, String gen, String spec){
 		String sequel = "UPDATE FLOWERS SET GENUS = ? , SPECIES = ? WHERE COMNAME = '" + x + "'";
 		try{
@@ -117,38 +124,38 @@ public class SqliteDB{
 		}
 	}
 
-	public void upFeatures(String x, String loc, String cla, String lat, String lon, String map, String elev){
-		String sequel = "UPDATE FEATURES SET LOCATION = ?, CLASS = ?, LATITUDE = ?, LONGITUDE = ?, MAP = ?, ELEV = ? WHERE LOCATION = " + x;
+	//Method updates tuple in features table
+	public void upFeatures(String x, String cla, String lat, String lon, String map, String elev){
+		String sequel = "UPDATE FEATURES SET CLASS = ?, LATITUDE = ?, LONGITUDE = ?, MAP = ?, ELEV = ? WHERE LOCATION = " + x;
 		try{
 			this.stmt = c.createStatement();
 			PreparedStatement pstmt = c.prepareStatement(sequel);
-			pstmt.setString(1, loc);
-			pstmt.setString(2, cla);
-			pstmt.setString(3, lat);
-			pstmt.setString(4, lon);
-			pstmt.setString(5, map);
-			pstmt.setString(6, elev);
+			pstmt.setString(1, cla);
+			pstmt.setString(2, lat);
+			pstmt.setString(3, lon);
+			pstmt.setString(4, map);
+			pstmt.setString(5, elev);
 			pstmt.executeUpdate();
 		}catch(Exception e){
 			System.out.println("Error: " + e);
 		}
 	}
 
-	public void upSightings(String sn, String name, String person, String location, String sighted){
-		String sequel = "UPDATE SIGHTINGS SET NAME = ?, PERSON = ?, LOCATION = ?, SIGHTED = ? WHERE NAME = " + sn;
+	//Method updates tuple in features table
+	public void upSightings(String sn, String ln, String person, String sighted){
+		String sequel = "UPDATE SIGHTINGS SET PERSON = ?, SIGHTED = ? WHERE NAME = '" + sn + "', LOCATION = '" + ln + "'";
 		try{
 			this.stmt = c.createStatement();
 			PreparedStatement pstmt = c.prepareStatement(sequel);
-			pstmt.setString(1, name);
-			pstmt.setString(2, person);
-			pstmt.setString(3, location);
-			pstmt.setString(4, sighted);
+			pstmt.setString(1, person);
+			pstmt.setString(2, sighted);
 			pstmt.executeUpdate();			
 		}catch(Exception e){
 			System.out.println("Error: " + e);
 		}
 	}
 
+	//Method inserts new tuple into Sightings table
 	public void insertSighting(String name, String location, String date, String flower){
 		try{
 			String sequel = "INSERT INTO SIGHTINGS (NAME, PERSON, LOCATION, SIGHTED) VALUES (?,?,?,?)";
@@ -163,6 +170,7 @@ public class SqliteDB{
 		}
 	}
 
+	//Method closes the database
 	public void closeConnection(){
 		try{
 			c.close();
