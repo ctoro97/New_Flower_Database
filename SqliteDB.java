@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 public class SqliteDB{
 	Connection c = null;
 	Statement stmt = null;
-	String url = "jdbc:sqlite:C:/Users/sdwt1/Downloads/New_Flower_Database-master/New_Flower_Database-master/flowers.db";
+	String url = "jdbc:sqlite:C:/Users/toroc/Database_Flower/flowers.db";
 
 	SqliteDB(){
 		try{
@@ -104,14 +104,13 @@ public class SqliteDB{
 		}
 	}
 
-	public void upFlower(String x, String com, String gen, String spec){
-		String sequel = "UPDATE FLOWERS SET GENUS = ? , SPECIES = ?, COMNAME = ? WHERE COMNAME = " + x;
+	public void upFlower(String x, String gen, String spec){
+		String sequel = "UPDATE FLOWERS SET GENUS = ? , SPECIES = ? WHERE COMNAME = '" + x + "'";
 		try{
 			this.stmt = c.createStatement();
 			PreparedStatement pstmt = c.prepareStatement(sequel);
 			pstmt.setString(1, gen);
 			pstmt.setString(2, spec);
-			pstmt.setString(3, com);
 			pstmt.executeUpdate();
 		}catch(Exception e){
 			System.out.println("Error: " + e);
@@ -135,8 +134,19 @@ public class SqliteDB{
 		}
 	}
 
-	public void upSightings(){
-		
+	public void upSightings(String sn, String name, String person, String location, String sighted){
+		String sequel = "UPDATE SIGHTINGS SET NAME = ?, PERSON = ?, LOCATION = ?, SIGHTED = ? WHERE NAME = " + sn;
+		try{
+			this.stmt = c.createStatement();
+			PreparedStatement pstmt = c.prepareStatement(sequel);
+			pstmt.setString(1, name);
+			pstmt.setString(2, person);
+			pstmt.setString(3, location);
+			pstmt.setString(4, sighted);
+			pstmt.executeUpdate();			
+		}catch(Exception e){
+			System.out.println("Error: " + e);
+		}
 	}
 
 	public void insertSighting(String name, String location, String date, String flower){

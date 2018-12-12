@@ -45,39 +45,71 @@ public class FlowerClub{
 				//USER CHOOSES A FLOWER FROM FLOWER TABLE
 				System.out.println("\n  SELECT FLOWER SIGHTED:\n");
 				db.listFlowers();
-				int flor = input.nextInt();
+				int flor = userIn();
 				ArrayList list = db.getFlowers();
-				String flo = list.get(flor - 1).toString();
-				//USER CHOOSES A LOCATION FROM FEATURES TABLES
-				System.out.println("\n  SELECT LOCATION SIGHTED:\n");
-				db.listLocations();
-				int loc = input.nextInt();
-				ArrayList arr = db.getLocations();
-				String place = arr.get(loc - 1).toString();
-				//USER SUBMITS DATE FLOWER WAS SEEN
-				System.out.println("\n  YEAR SIGHTED: \n");
-				int y = input.nextInt();
-				System.out.println("\n  MONTH SIGHTED: \n");
-				int m = input.nextInt();
-				System.out.println("\n  DAY SIGHTED: \n");
-				int d = input.nextInt();
-				String date = y + "-" + m + "-" + d;
-				//USER SUBMITS NAME
-				System.out.println("\n  WHAT IS YOUR NAME:\n");
-				String name = input.nextLine();
-				name = input.nextLine();
-				db.insertSighting(name, place, date, flo);
+				if(flor > 0 && flor < list.size()){
+
+					String flo = list.get(flor - 1).toString();
+					//USER CHOOSES A LOCATION FROM FEATURES TABLES
+					System.out.println("\n  SELECT LOCATION SIGHTED:\n");
+					db.listLocations();
+					int loc = userIn();
+					ArrayList arr = db.getLocations();
+					String place = arr.get(loc - 1).toString();
+					//USER SUBMITS DATE FLOWER WAS SEEN
+					System.out.println("\n  YEAR SIGHTED: \n");
+					int y = userIn();
+					System.out.println("\n  MONTH SIGHTED: \n");
+					int m = userIn();
+					System.out.println("\n  DAY SIGHTED: \n");
+					int d = userIn();
+					String date = y + "-" + m + "-" + d;
+					//USER SUBMITS NAME
+					System.out.println("\n  WHAT IS YOUR NAME:\n");
+					String name = input.nextLine();
+					name = input.nextLine();
+					db.insertSighting(name, place, date, flo);
+				}
+				else{
+					System.out.println("\n  OPTION DOES NOT EXIST!! \n");
+				}
+				
 			}
 			//UPDATE FLOWER INFORMATION
 			else if(uIn == 2){
 				System.out.println("\n  SELECT TABLE TO UPDATE: \n\n\t1) SIGHTINGS\n\t2) FEATURES\n\t3) FLOWERS\n");
-				tin = input.nextInt();
+				tin = userIn();
 				if(tin == 1){
 
 				}else if(tin == 2){
+					System.out.println("\n  SELECT FEATURE TO UPDATE: \n");
+					db.listLocations();
+					int upfeat = userIn();
+					ArrayList lugar = db.getLocations();
+					String dfeat = lugar.get(upfeat - 1).toString();
+					System.out.println("\n  LOCATION NAME: \n");
+					System.out.println("\n  CLASS NAME: \n");
+					System.out.println("\n  LATITUDE: \n");
+					System.out.println("\n  LONGITUDE: \n");
+					System.out.println("\n  MAP NAME: \n");
+					System.out.println("\n  ELEVATION: \n");
+					//db.upFeatures();
 
 				}else if(tin == 3){
-
+					System.out.println("\n  SELECT FLOWER TO UPDATE: \n");
+					db.listFlowers();
+					int upflor = userIn();
+					ArrayList flores = db.getFlowers();
+					if(upflor > 0 && upflor < flores.size()){
+						String dflow = flores.get(upflor - 1).toString();
+						System.out.println("\n  GENUS NAME: \n");
+						String gen = input.next();
+						System.out.println("\n  SPECIES NAME: \n");
+						String nam = input.next();											
+						db.upFlower(dflow, gen, nam);
+					}else{
+						System.out.println("\n  OPTION DOES NOT EXIST!! \n");
+					}
 				}
 			}
 			//SELECT A FLOWER
@@ -85,8 +117,17 @@ public class FlowerClub{
 				System.out.println("\n  SELECT A FLOWER: \n");
 				db.listFlowers();
 				ArrayList list = db.getFlowers();
-				fIn = input.nextInt();
-				db.dispSightings(list.get(fIn - 1).toString());
+				fIn = userIn();
+				if(fIn > 0 && fIn < list.size()){
+					db.dispSightings(list.get(fIn - 1).toString());
+				}
+				else{
+					System.out.println("\n  OPTION DOES NOT EXIST!! \n");
+				}
+			}
+
+			else{
+				System.out.println("\n  OPTION NOT VALID!! PLEASE TRY AGAIN: \n");
 			}
 
 		}
@@ -112,6 +153,8 @@ public class FlowerClub{
 		System.out.println(disp);
 	}
 
+
+//METHOD FOR USER INPUTING INTEGERS
 	public static int userIn(){
 		Scanner x = new Scanner(System.in);
 		int y = -1;
@@ -121,11 +164,12 @@ public class FlowerClub{
 				y = x.nextInt();
 				loop = false;
 			}catch(Exception e){
-				System.out.println("INVALID INPUT!! PLEASE ENTER VALUE AGAIN: ");
+				System.out.println("\nINVALID INPUT!! PLEASE ENTER VALUE AGAIN: \n");
 				x.nextLine();
 			}
 		}while(loop);
 		return y;
-	}		
+	}
+		
 
 }
