@@ -33,7 +33,7 @@ public class FlowerClub{
 		int tin;
 		while (true){
 			System.out.println("  PLEASE SELECT AN OPTION:\n\n\t1) FLOWER SIGHTINGS\n\t2) UPDATE FLOWER INFORMATION\n\t3) NEW FLOWER SIGHTING\n\t4) TERMINATE PROGRAM\n"); 
-			uIn = input.nextInt();
+			uIn = userIn();
 			//TERMINATE PROGRAM
 			if (uIn == 4){
 				closeScreen();
@@ -111,6 +111,21 @@ public class FlowerClub{
 		disp += "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
 		System.out.println(disp);
 	}
-		
+
+	public static int userIn(){
+		Scanner x = new Scanner(System.in);
+		int y = -1;
+		boolean loop = true;
+		do{
+			try{
+				y = x.nextInt();
+				loop = false;
+			}catch(Exception e){
+				System.out.println("INVALID INPUT!! PLEASE ENTER VALUE AGAIN: ");
+				x.nextLine();
+			}
+		}while(loop);
+		return y;
+	}		
 
 }

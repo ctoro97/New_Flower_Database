@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 public class SqliteDB{
 	Connection c = null;
 	Statement stmt = null;
-	String url = "jdbc:sqlite:C:/Users/toroc/Database_Flower/flowers.db";
+	String url = "jdbc:sqlite:C:/Users/sdwt1/Downloads/New_Flower_Database-master/New_Flower_Database-master/flowers.db";
 
 	SqliteDB(){
 		try{
@@ -104,17 +104,35 @@ public class SqliteDB{
 		}
 	}
 
-	public void upFlower(String x){
+	public void upFlower(String x, String com, String gen, String spec){
+		String sequel = "UPDATE FLOWERS SET GENUS = ? , SPECIES = ?, COMNAME = ? WHERE COMNAME = " + x;
 		try{
 			this.stmt = c.createStatement();
-			//ResultSet rs = stmt.executeQuery();
+			PreparedStatement pstmt = c.prepareStatement(sequel);
+			pstmt.setString(1, gen);
+			pstmt.setString(2, spec);
+			pstmt.setString(3, com);
+			pstmt.executeUpdate();
 		}catch(Exception e){
 			System.out.println("Error: " + e);
 		}
 	}
 
-	public void upFeatures(){
-
+	public void upFeatures(String x, String loc, String cla, String lat, String lon, String map, String elev){
+		String sequel = "UPDATE FEATURES SET LOCATION = ?, CLASS = ?, LATITUDE = ?, LONGITUDE = ?, MAP = ?, ELEV = ? WHERE LOCATION = " + x;
+		try{
+			this.stmt = c.createStatement();
+			PreparedStatement pstmt = c.prepareStatement(sequel);
+			pstmt.setString(1, loc);
+			pstmt.setString(2, cla);
+			pstmt.setString(3, lat);
+			pstmt.setString(4, lon);
+			pstmt.setString(5, map);
+			pstmt.setString(6, elev);
+			pstmt.executeUpdate();
+		}catch(Exception e){
+			System.out.println("Error: " + e);
+		}
 	}
 
 	public void upSightings(){
