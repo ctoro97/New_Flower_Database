@@ -103,7 +103,7 @@ public class FlowerClub{
 							String dsightt = nloc.get(upSightT - 1).toString();
 							System.out.println("\n  SIGHTED BY: \n");
 							String sname = input.nextLine();
-							sname = input.nextLine();
+							//sname = input.nextLine();
 							System.out.println("\n  YEAR SIGHTED: \n");
 							int ye = userIn();
 							System.out.println("\n  MONTH SIGHTED: \n");

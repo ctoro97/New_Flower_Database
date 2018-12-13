@@ -126,7 +126,7 @@ public class SqliteDB{
 
 	//Method updates tuple in features table
 	public void upFeatures(String x, String cla, String lat, String lon, String map, String elev){
-		String sequel = "UPDATE FEATURES SET CLASS = ?, LATITUDE = ?, LONGITUDE = ?, MAP = ?, ELEV = ? WHERE LOCATION = " + x;
+		String sequel = "UPDATE FEATURES SET CLASS = ?, LATITUDE = ?, LONGITUDE = ?, MAP = ?, ELEV = ? WHERE LOCATION = '" + x + "'";
 		try{
 			this.stmt = c.createStatement();
 			PreparedStatement pstmt = c.prepareStatement(sequel);
@@ -143,7 +143,7 @@ public class SqliteDB{
 
 	//Method updates tuple in features table
 	public void upSightings(String sn, String ln, String person, String sighted){
-		String sequel = "UPDATE SIGHTINGS SET PERSON = ?, SIGHTED = ? WHERE NAME = '" + sn + "', LOCATION = '" + ln + "'";
+		String sequel = "UPDATE SIGHTINGS SET PERSON = ?, SIGHTED = ? WHERE NAME = '" + sn + "' AND LOCATION = '" + ln + "'";
 		try{
 			this.stmt = c.createStatement();
 			PreparedStatement pstmt = c.prepareStatement(sequel);
