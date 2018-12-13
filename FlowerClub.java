@@ -53,14 +53,14 @@ public class FlowerClub{
 				db.listFlowers();
 				int flor = userIn();
 				ArrayList list = db.getFlowers();
-				if(flor > 0 && flor < list.size()){
+				if(flor > 0 && flor < list.size() + 1){
 					String flo = list.get(flor - 1).toString();
 					//USER CHOOSES A LOCATION FROM FEATURES TABLES
 					System.out.println("\n  SELECT LOCATION SIGHTED:\n");
 					db.listLocations();
 					int loc = userIn();
 					ArrayList arr = db.getLocations();
-					if(loc > 0 && loc < arr.size()){
+					if(loc > 0 && loc < arr.size() + 1){
 						String place = arr.get(loc - 1).toString();
 						//USER SUBMITS DATE FLOWER WAS SEEN
 						System.out.println("\n  YEAR SIGHTED: \n");
@@ -93,13 +93,13 @@ public class FlowerClub{
 					db.listFlowers();
 					int upSightO = userIn();
 					ArrayList flows = db.getFlowers();
-					if(upSightO > 0 && upSightO < flows.size()){
+					if(upSightO > 0 && upSightO < flows.size() + 1){
 						String dsighto = flows.get(upSightO - 1).toString();
 						System.out.println("\n  SELECT LOCATION TO UPDATE: \n");
 						db.listLocations();
 						int upSightT = userIn();
 						ArrayList nloc = db.getLocations();
-						if(upSightT > 0 && upSightT < nloc.size()){
+						if(upSightT > 0 && upSightT < nloc.size() + 1){
 							String dsightt = nloc.get(upSightT - 1).toString();
 							System.out.println("\n  SIGHTED BY: \n");
 							String sname = input.nextLine();
@@ -123,7 +123,7 @@ public class FlowerClub{
 					db.listLocations();
 					int upfeat = userIn();
 					ArrayList lugar = db.getLocations();
-					if(upfeat > 0 && upfeat < lugar.size()){
+					if(upfeat > 0 && upfeat < lugar.size() + 1){
 						String dfeat = lugar.get(upfeat - 1).toString();
 						System.out.println("\n  CLASS NAME: \n");
 						String cname = input.next();
@@ -145,7 +145,7 @@ public class FlowerClub{
 					db.listFlowers();
 					int upflor = userIn();
 					ArrayList flores = db.getFlowers();
-					if(upflor > 0 && upflor < flores.size()){
+					if(upflor > 0 && upflor < flores.size() + 1){
 						String dflow = flores.get(upflor - 1).toString();
 						System.out.println("\n  GENUS NAME: \n");
 						String gen = input.next();
@@ -163,7 +163,7 @@ public class FlowerClub{
 				db.listFlowers();
 				ArrayList list = db.getFlowers();
 				fIn = userIn();
-				if(fIn > 0 && fIn < list.size()){
+				if(fIn > 0 && fIn < list.size() + 1){
 					db.dispSightings(list.get(fIn - 1).toString());
 				}
 				else{
